@@ -2,25 +2,33 @@
 package main
 
 import (
-    "log"
     "net/http"
 
     "github.com/joho/godotenv"
+    "go.uber.org/zap"
     "operary/config"
     "operary/router"
+    "operary/internal/services"
+
 )
 
 func main() {
-    // Load environment variables from .env
+    logger, _ := zap.NewProduction()
+    defer logger.Sync()
+    sugar := logger.Sugar()
+
+    sugar.Info("🌐 Loading environment...")
     if err := godotenv.Load(); err != nil {
-        log.Println("No .env file found. Continuing with system environment...")
+        sugar.Warn("No .env file found. Using system environment.")
     }
 
-    // Initialize MongoDB
+    sugar.Info("🔌 Connecting to MongoDB...")
     config.InitMongo()
 
-    // Start router
-    r := router.NewRouter()
-    log.Println("🚀 Operary API is running on http://localhost:8080")
+    services.StartNotificationService(sugar)
+
+    sugar.Info("📡 Starting Operary API on :8080")
+    r := router.NewRouterWithLogger(sugar)
+
     http.ListenAndServe(":8080", r)
 }

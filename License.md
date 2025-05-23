@@ -1,5 +1,5 @@
 Copyright (c) 2024 Karthik Mohan, System Signal
-
+![License](https://img.shields.io/badge/license-Proprietary-blue)
 All rights reserved.
 
 This repository is intended for demonstration, educational, and portfolio purposes only.  

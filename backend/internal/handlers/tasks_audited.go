@@ -23,6 +23,7 @@ func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
     var req struct {
         Title      string `json:"title"`
         AssignedTo string `json:"assigned_to"`
+        UserID     string `json:"user_id"`
     }
 
     if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -35,6 +36,8 @@ func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Failed to create task", http.StatusInternalServerError)
         return
     }
+
+    _ = models.RecordAudit("task", task.ID, "create", req.UserID, task)
 
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(task)
