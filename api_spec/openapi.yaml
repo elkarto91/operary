@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: Operary API
+  description: >
+    REST API for Operary – a coordination engine for task and shift orchestration in industrial operations.
+  version: "0.1"
+  contact:
+    name: Karthik Mohan
+    email: karthiknair091@gmail.com
+    url: https://systemsignal.dev
+
+servers:
+  - url: https://api.operary.dev/v1
+    description: Production server
+  - url: http://localhost:8080/v1
+    description: Development server
+
+tags:
+  - name: Tasks
+  - name: Shifts
+  - name: Audit Logs
+
+components:
+  securitySchemes:
+    OrgTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Org-Token
+
+  schemas:
+    Task:
+      type: object
+      required: [title, assigned_to]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        assigned_to:
+          type: string
+        status:
+          type: string
+          enum: [open, in_progress, closed, escalated]
+        due_time:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+
+    Shift:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        supervisor_id:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        ended_at:
+          type: string
+          format: date-time
+        closed:
+          type: boolean
+
+    AuditEntry:
+      type: object
+      properties:
+        entity_type:
+          type: string
+        entity_id:
+          type: string
+        action:
+          type: string
+        user_id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+security:
+  - OrgTokenAuth: []
+
+paths:
+  /tasks:
+    post:
+      tags: [Tasks]
+      summary: Create a new task
+      security:
+        - OrgTokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        201:
+          description: Task created
+
+    get:
+      tags: [Tasks]
+      summary: List all tasks
+      security:
+        - OrgTokenAuth: []
+      responses:
+        200:
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+
+  /tasks/{task_id}:
+    patch:
+      tags: [Tasks]
+      summary: Update task status or notes
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                notes:
+                  type: string
+      responses:
+        200:
+          description: Task updated
+
+  /shifts:
+    post:
+      tags: [Shifts]
+      summary: Start a new shift
+      security:
+        - OrgTokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                supervisor_id:
+                  type: string
+      responses:
+        201:
+          description: Shift started
+
+  /shifts/{shift_id}/close:
+    post:
+      tags: [Shifts]
+      summary: Close a shift
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: shift_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Shift closed
+
+  /audit:
+    get:
+      tags: [Audit Logs]
+      summary: Query audit trail entries
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: entity_type
+          in: query
+          schema:
+            type: string
+        - name: entity_id
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: Audit log entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuditEntry"
