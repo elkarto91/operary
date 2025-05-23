@@ -1,7 +1,7 @@
 # 🛰️ Operary
 
 > **The coordination engine for industrial operations**  
-> Product vision and API-first proof of concept by [Karthik Mohan](https://systemsignal.dev)
+> Product vision and API-first proof of concept by [Karthik Mohan](https://systemsignal.dev/about)
 
 ---
 
