@@ -2,7 +2,7 @@
 
 > **The coordination engine for industrial operations**  
 > Product vision and API-first proof of concept by [Karthik Mohan](https://systemsignal.dev/about)
-
+![Operary](operary_cover.png)
 ---
 
 ## 🧠 What is Operary?
