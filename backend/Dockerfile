@@ -1,24 +1,15 @@
+FROM golang:1.22
 
-# Use official Golang image
-FROM golang:1.20-alpine
-
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY go.mod ./
-COPY go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy source code
 COPY . .
 
-# Build binary
-RUN go build -o operary main.go
+# Tell Go where the module root is (WORKDIR=/app and module=operary)
+ENV GO111MODULE=on
 
-# Environment
-ENV PORT=8080
-EXPOSE 8080
+RUN go build -o operary ./main.go
 
-# Run
 CMD ["./operary"]
