@@ -11,3 +11,4 @@ Cloning, forking, or any form of reuse is prohibited unless otherwise licensed i
 If you're interested in collaboration, licensing, or partnerships, please contact:
 📫 karthik@systemsignal.dev
 🌐 https://systemsignal.dev
+@chaingopher in X
