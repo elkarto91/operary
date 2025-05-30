@@ -8,7 +8,7 @@
 
 ## 🧠 What is Operary?
 
-**Operary** is a fictional yet fully detailed enterprise SaaS platform designed to coordinate **human workflows, machine signals, and operations intelligence** in complex environments like:
+**Operary** is a fictional(personal project now) yet fully detailed enterprise SaaS platform designed to coordinate **human workflows, machine signals, and operations intelligence** in complex environments like:
 
 - Smart factories  
 - Utility operations  
