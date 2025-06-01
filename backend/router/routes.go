@@ -5,9 +5,11 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/elkarto91/operary/internal/auditsync"
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/handlers"
 	"github.com/elkarto91/operary/internal/opsmirror"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -21,6 +23,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Use(middleware.Recoverer)
 	corepad.RegisterRoutes(r)
 	opsmirror.RegisterRoutes(r)
+	auditsync.RegisterRoutes(r)
 
 	r.Use(handlers.MetricsMiddleware)
 	r.Get("/v1/metrics", handlers.MetricsHandler)

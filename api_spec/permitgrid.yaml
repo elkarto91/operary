@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: PermitGrid API
+  version: 1.0.0
+  description: API for managing permit-to-work workflows
+
+paths:
+  /permitgrid/requests:
+    post:
+      summary: Create a new permit request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermitRequest'
+      responses:
+        '200':
+          description: Permit created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permit'
+
+    get:
+      summary: List all permit requests
+      responses:
+        '200':
+          description: List of permits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Permit'
+
+  /permitgrid/requests/{id}/approve:
+    patch:
+      summary: Approve a permit request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Permit approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permit'
+
+  /permitgrid/requests/{id}/reject:
+    patch:
+      summary: Reject a permit request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Permit rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permit'
+
+components:
+  schemas:
+    PermitRequest:
+      type: object
+      required:
+        - title
+        - description
+        - requested_by
+        - shift_id
+        - tags
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        requested_by:
+          type: string
+        shift_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    Permit:
+      allOf:
+        - $ref: '#/components/schemas/PermitRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+            requested_at:
+              type: string
+              format: date-time
+            approved_by:
+              type: string
+            approved_at:
+              type: string
+              format: date-time

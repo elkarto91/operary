@@ -13,6 +13,20 @@ var (
 	startTime     = time.Now()
 	totalRequests uint64
 )
+var (
+	AuditSyncTotalSubmitted = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "auditsync_total_submitted",
+			Help: "Total number of audit entries submitted",
+		},
+	)
+	AuditSyncSubmissionFailures = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "auditsync_submission_failures_total",
+			Help: "Number of failed audit submissions",
+		},
+	)
+)
 
 func MetricsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -52,9 +66,36 @@ var OpsMirrorWarnings = prometheus.NewGauge(
 	},
 )
 
+var (
+	PermitGridTotalSubmitted = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "permitgrid_total_submitted",
+			Help: "Total number of permit requests submitted",
+		},
+	)
+
+	PermitGridApprovals = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "permitgrid_total_approved",
+			Help: "Total number of permits approved",
+		},
+	)
+
+	PermitGridRejections = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "permitgrid_total_rejected",
+			Help: "Total number of permits rejected",
+		},
+	)
+)
+
 func init() {
 	prometheus.MustRegister(CorePadNotesCreated)
 	prometheus.MustRegister(CorePadNotesFailed)
 	prometheus.MustRegister(OpsMirrorWarnings)
-
+	prometheus.MustRegister(AuditSyncTotalSubmitted)
+	prometheus.MustRegister(AuditSyncSubmissionFailures)
+	prometheus.MustRegister(PermitGridTotalSubmitted)
+	prometheus.MustRegister(PermitGridApprovals)
+	prometheus.MustRegister(PermitGridRejections)
 }

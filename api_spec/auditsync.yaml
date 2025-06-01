@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: AuditSync API
+  version: 1.0.0
+  description: API for submitting and retrieving digital operational audits
+
+paths:
+  /auditsync/entries:
+    post:
+      summary: Submit a new audit entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditEntryRequest'
+      responses:
+        '200':
+          description: Audit entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEntry'
+
+    get:
+      summary: Get list of all audit entries
+      responses:
+        '200':
+          description: List of audit entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditEntry'
+
+components:
+  schemas:
+    AuditEntryRequest:
+      type: object
+      required:
+        - checklist_id
+        - auditor
+        - passed
+        - findings
+        - tags
+        - shift_id
+      properties:
+        checklist_id:
+          type: string
+        auditor:
+          type: string
+        passed:
+          type: boolean
+        findings:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        shift_id:
+          type: string
+
+    AuditEntry:
+      allOf:
+        - $ref: '#/components/schemas/AuditEntryRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+            timestamp:
+              type: string
+              format: date-time

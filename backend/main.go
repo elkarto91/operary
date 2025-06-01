@@ -4,11 +4,12 @@ import (
 	"net/http"
 
 	"github.com/elkarto91/operary/config"
+	"github.com/elkarto91/operary/internal/auditsync"
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/opsmirror"
+	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/services"
 	"github.com/elkarto91/operary/router"
-
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 )
@@ -29,6 +30,8 @@ func main() {
 
 	opsmirror.Init(db)
 	corepad.Init(db)
+	auditsync.Init(db)
+	permitgrid.Init(db) // ✅ NEW
 
 	services.StartNotificationService(sugar)
 
