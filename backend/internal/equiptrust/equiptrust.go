@@ -1,8 +1,9 @@
-package opsmirror
+package equiptrust
 
 import (
-	"github.com/elkarto91/operary/internal/opsmirror/handler"
-	"github.com/elkarto91/operary/internal/opsmirror/repo"
+	"github.com/elkarto91/operary/internal/equiptrust/handler"
+	"github.com/elkarto91/operary/internal/equiptrust/repo"
+
 	"github.com/go-chi/chi/v5"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -12,7 +13,9 @@ func Init(db *mongo.Database) {
 }
 
 func RegisterRoutes(r chi.Router) {
-	r.Route("/opsmirror", func(r chi.Router) {
-		r.Get("/dashboard", handler.GetStatusDashboard)
+	r.Route("/equiptrust", func(r chi.Router) {
+		r.Post("/checkout", handler.CheckoutEquipment)
+		r.Patch("/return/{id}", handler.ReturnEquipment)
+		r.Get("/ledger", handler.ListLedger)
 	})
 }

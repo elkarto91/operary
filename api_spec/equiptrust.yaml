@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: EquipTrust API
+  version: 1.0.0
+  description: API for tracking equipment check-outs and returns
+
+paths:
+  /equiptrust/checkout:
+    post:
+      summary: Check out equipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentCheckoutRequest'
+      responses:
+        '200':
+          description: Equipment checked out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentLedger'
+
+  /equiptrust/return/{id}:
+    patch:
+      summary: Return checked-out equipment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Equipment returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentLedger'
+
+  /equiptrust/ledger:
+    get:
+      summary: Get full equipment ledger
+      responses:
+        '200':
+          description: List of equipment usage records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EquipmentLedger'
+
+components:
+  schemas:
+    EquipmentCheckoutRequest:
+      type: object
+      required:
+        - equipment_id
+        - used_by
+        - purpose
+        - shift_id
+      properties:
+        equipment_id:
+          type: string
+        used_by:
+          type: string
+        purpose:
+          type: string
+        shift_id:
+          type: string
+        notes:
+          type: string
+
+    EquipmentLedger:
+      allOf:
+        - $ref: '#/components/schemas/EquipmentCheckoutRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+            checked_out_at:
+              type: string
+              format: date-time
+            returned_at:
+              type: string
+              format: date-time

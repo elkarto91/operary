@@ -6,6 +6,7 @@ import (
 	"github.com/elkarto91/operary/config"
 	"github.com/elkarto91/operary/internal/auditsync"
 	"github.com/elkarto91/operary/internal/corepad"
+	"github.com/elkarto91/operary/internal/equiptrust"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/services"
@@ -32,6 +33,7 @@ func main() {
 	corepad.Init(db)
 	auditsync.Init(db)
 	permitgrid.Init(db) // ✅ NEW
+	equiptrust.Init(db)
 
 	services.StartNotificationService(sugar)
 

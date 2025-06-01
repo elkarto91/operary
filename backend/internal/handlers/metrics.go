@@ -88,6 +88,21 @@ var (
 		},
 	)
 )
+var (
+	EquipTrustCheckouts = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "equiptrust_checkouts_total",
+			Help: "Total number of equipment check-outs",
+		},
+	)
+
+	EquipTrustReturns = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "equiptrust_returns_total",
+			Help: "Total number of equipment returns",
+		},
+	)
+)
 
 func init() {
 	prometheus.MustRegister(CorePadNotesCreated)
@@ -98,4 +113,6 @@ func init() {
 	prometheus.MustRegister(PermitGridTotalSubmitted)
 	prometheus.MustRegister(PermitGridApprovals)
 	prometheus.MustRegister(PermitGridRejections)
+	prometheus.MustRegister(EquipTrustCheckouts)
+	prometheus.MustRegister(EquipTrustReturns)
 }
