@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  title: OpsMirror API
+  version: 1.0.0
+  description: Real-time status dashboard for control rooms
+
+paths:
+  /opsmirror/dashboard:
+    get:
+      summary: Get live system status overview
+      responses:
+        '200':
+          description: A list of system statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+        '500':
+          description: Failure to retrieve statuses
+
+components:
+  schemas:
+    Status:
+      type: object
+      properties:
+        system:
+          type: string
+          example: "Boiler A"
+        state:
+          type: string
+          enum: ["OK", "WARN", "FAIL"]
+          example: "WARN"
+        last_update:
+          type: string
+          format: date-time
+        notes:
+          type: string

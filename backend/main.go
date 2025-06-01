@@ -1,34 +1,39 @@
-
 package main
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/joho/godotenv"
-    "go.uber.org/zap"
-    "operary/config"
-    "operary/router"
-    "operary/internal/services"
+	"github.com/elkarto91/operary/config"
+	"github.com/elkarto91/operary/internal/corepad"
+	"github.com/elkarto91/operary/internal/opsmirror"
+	"github.com/elkarto91/operary/internal/services"
+	"github.com/elkarto91/operary/router"
 
+	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 func main() {
-    logger, _ := zap.NewProduction()
-    defer logger.Sync()
-    sugar := logger.Sugar()
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+	sugar := logger.Sugar()
 
-    sugar.Info("🌐 Loading environment...")
-    if err := godotenv.Load(); err != nil {
-        sugar.Warn("No .env file found. Using system environment.")
-    }
+	sugar.Info("🌐 Loading environment...")
+	if err := godotenv.Load(); err != nil {
+		sugar.Warn("No .env file found. Using system environment.")
+	}
 
-    sugar.Info("🔌 Connecting to MongoDB...")
-    config.InitMongo()
+	sugar.Info("🔌 Connecting to MongoDB...")
+	config.InitMongo()
+	db := config.GetMongoDB()
 
-    services.StartNotificationService(sugar)
+	opsmirror.Init(db)
+	corepad.Init(db)
 
-    sugar.Info("📡 Starting Operary API on :8080")
-    r := router.NewRouterWithLogger(sugar)
+	services.StartNotificationService(sugar)
 
-    http.ListenAndServe(":8080", r)
+	sugar.Info("📡 Starting Operary API on :8080")
+	r := router.NewRouterWithLogger(sugar)
+
+	http.ListenAndServe(":8080", r)
 }

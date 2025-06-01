@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: CorePad API
+  version: 1.0.0
+  description: API for structured operator note-taking in Operary
+
+paths:
+  /corepad/notes:
+    post:
+      summary: Create a new note
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteRequest'
+      responses:
+        '200':
+          description: Note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+  /corepad/notes/{id}:
+    get:
+      summary: Get a note by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Note found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '404':
+          description: Note not found
+
+components:
+  schemas:
+    NoteRequest:
+      type: object
+      required:
+        - content
+        - author
+        - tags
+      properties:
+        content:
+          type: string
+        author:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        author:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time

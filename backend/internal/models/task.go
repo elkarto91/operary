@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"operary/config"
+	"github.com/elkarto91/operary/config"
 
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"

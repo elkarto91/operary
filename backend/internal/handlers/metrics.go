@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"sync/atomic"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
@@ -26,4 +28,33 @@ func MetricsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprintf(w, "operary_uptime_seconds %.2f\n", uptime)
 	fmt.Fprintf(w, "operary_total_requests %d\n", count)
+}
+
+var (
+	CorePadNotesCreated = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "corepad_notes_created_total",
+			Help: "Total number of notes created in CorePad",
+		},
+	)
+	CorePadNotesFailed = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "corepad_notes_failed_total",
+			Help: "Number of failed note creations",
+		},
+	)
+)
+
+var OpsMirrorWarnings = prometheus.NewGauge(
+	prometheus.GaugeOpts{
+		Name: "opsmirror_status_warnings_total",
+		Help: "Number of systems in WARN state",
+	},
+)
+
+func init() {
+	prometheus.MustRegister(CorePadNotesCreated)
+	prometheus.MustRegister(CorePadNotesFailed)
+	prometheus.MustRegister(OpsMirrorWarnings)
+
 }
