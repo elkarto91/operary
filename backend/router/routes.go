@@ -8,6 +8,7 @@ import (
 	"github.com/elkarto91/operary/internal/auditsync"
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/equiptrust"
+	"github.com/elkarto91/operary/internal/flowgrid"
 	"github.com/elkarto91/operary/internal/handlers"
 	authmiddleware "github.com/elkarto91/operary/internal/middleware"
 	"github.com/elkarto91/operary/internal/opsmirror"
@@ -32,6 +33,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	equiptrust.RegisterRoutes(r)
 	sensorvault.RegisterRoutes(r)
 	permitgrid.RegisterRoutes(r)
+	flowgrid.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
 
 	r.Use(handlers.MetricsMiddleware)

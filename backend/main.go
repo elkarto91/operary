@@ -7,6 +7,7 @@ import (
 	"github.com/elkarto91/operary/internal/auditsync"
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/equiptrust"
+	"github.com/elkarto91/operary/internal/flowgrid"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/sensorvault"
@@ -35,6 +36,7 @@ func main() {
 	corepad.Init(db)
 	auditsync.Init(db)
 	permitgrid.Init(db) // ✅ NEW
+	flowgrid.Init(db)
 	traceboard.Init(db)
 	equiptrust.Init(db)
 	sensorvault.Init(db)
