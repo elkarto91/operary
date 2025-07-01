@@ -58,9 +58,9 @@ All API requests must include an `X-Org-Token` header for access control.
 * **GitHub Pages + Jekyll** (linked portfolio docs)
 ## Quickstart
 
-1. Install Go 1.18+
-2. Start the backend with `go run backend/cmd/operary/main.go`
-3. Run `go run scripts/sim_shift_test.go` to simulate a shift
+1. Install Go 1.18+ and Docker
+2. Start the services with `make compose-up`
+3. (Optional) run `go run scripts/sim_shift_test.go` to simulate a shift
 
 
 ## Module Overview

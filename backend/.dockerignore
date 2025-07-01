@@ -1,0 +1,11 @@
+# Files not needed inside the container build context
+.git
+.gitignore
+.env
+docker-compose.yml
+Makefile
+run.sh
+access-guide.md
+*.md
+*.png
+
