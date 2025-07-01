@@ -6,14 +6,18 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/elkarto91/operary/internal/auditsync"
+	"github.com/elkarto91/operary/internal/authz"
+	"github.com/elkarto91/operary/internal/configmgr"
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/equiptrust"
+	"github.com/elkarto91/operary/internal/eventbus"
 	"github.com/elkarto91/operary/internal/flowgrid"
 	"github.com/elkarto91/operary/internal/handlers"
 	"github.com/elkarto91/operary/internal/integrations"
 	authmiddleware "github.com/elkarto91/operary/internal/middleware"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
+	"github.com/elkarto91/operary/internal/search"
 	"github.com/elkarto91/operary/internal/sensorvault"
 	"github.com/elkarto91/operary/internal/supplymesh"
 	"github.com/elkarto91/operary/internal/traceboard"
@@ -31,6 +35,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(authmiddleware.TokenAuthMiddleware)
+	r.Use(authz.AuthMiddleware)
 	corepad.RegisterRoutes(r)
 	opsmirror.RegisterRoutes(r)
 	auditsync.RegisterRoutes(r)
@@ -39,6 +44,10 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	trainops.RegisterRoutes(r)
 	permitgrid.RegisterRoutes(r)
 	supplymesh.RegisterRoutes(r)
+	authz.RegisterRoutes(r)
+	eventbus.RegisterRoutes(r)
+	configmgr.RegisterRoutes(r)
+	search.RegisterRoutes(r)
 	flowgrid.RegisterRoutes(r)
 	integrations.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
@@ -83,6 +92,9 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Route("/v1/audit", func(r chi.Router) {
 		r.Get("/", handlers.GetAuditLogsHandler)
 	})
+
+	authz.EnforceRouteRoles("/v1/tasks/", []string{"admin", "operator"})
+	authz.EnforceRouteRoles("/v1/audit/", []string{"admin", "auditor"})
 
 	// External webhook
 	r.Post("/v1/webhook", handlers.WebhookHandler)
