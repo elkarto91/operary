@@ -9,6 +9,7 @@ import (
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/equiptrust"
 	"github.com/elkarto91/operary/internal/handlers"
+	authmiddleware "github.com/elkarto91/operary/internal/middleware"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/go-chi/chi/v5"
@@ -22,6 +23,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(authmiddleware.TokenAuthMiddleware)
 	corepad.RegisterRoutes(r)
 	opsmirror.RegisterRoutes(r)
 	auditsync.RegisterRoutes(r)
@@ -60,11 +62,15 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Route("/v1/shifts", func(r chi.Router) {
 		r.Post("/", handlers.StartShiftHandler)
 		r.Post("/{shiftID}/close", handlers.CloseShiftHandler)
+		r.Get("/{shiftID}/report", handlers.GetShiftReportHandler)
 	})
 
 	r.Route("/v1/audit", func(r chi.Router) {
 		r.Get("/", handlers.GetAuditLogsHandler)
 	})
+
+	// External webhook
+	r.Post("/v1/webhook", handlers.WebhookHandler)
 
 	return r
 }

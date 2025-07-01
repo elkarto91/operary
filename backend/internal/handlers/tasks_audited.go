@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"sync/atomic"
 
 	"github.com/elkarto91/operary/internal/models"
 )
@@ -35,6 +36,8 @@ func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to create task", http.StatusInternalServerError)
 		return
 	}
+
+	atomic.AddUint64(&tasksCreated, 1)
 
 	_ = models.RecordAudit("task", task.ID, "create", req.UserID, task)
 

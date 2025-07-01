@@ -12,6 +12,9 @@ import (
 var (
 	startTime     = time.Now()
 	totalRequests uint64
+	shiftsStarted uint64
+	shiftsClosed  uint64
+	tasksCreated  uint64
 )
 var (
 	AuditSyncTotalSubmitted = prometheus.NewCounter(
@@ -38,10 +41,16 @@ func MetricsMiddleware(next http.Handler) http.Handler {
 func MetricsHandler(w http.ResponseWriter, r *http.Request) {
 	uptime := time.Since(startTime).Seconds()
 	count := atomic.LoadUint64(&totalRequests)
+	started := atomic.LoadUint64(&shiftsStarted)
+	closed := atomic.LoadUint64(&shiftsClosed)
+	created := atomic.LoadUint64(&tasksCreated)
 
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprintf(w, "operary_uptime_seconds %.2f\n", uptime)
 	fmt.Fprintf(w, "operary_total_requests %d\n", count)
+	fmt.Fprintf(w, "operary_shifts_started %d\n", started)
+	fmt.Fprintf(w, "operary_shifts_closed %d\n", closed)
+	fmt.Fprintf(w, "operary_tasks_created %d\n", created)
 }
 
 var (

@@ -20,6 +20,15 @@ type Shift struct {
 
 var shiftCollection *mongo.Collection = config.OperaryDB.Collection("shifts")
 
+func GetShiftByID(id string) (*Shift, error) {
+	var shift Shift
+	err := shiftCollection.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&shift)
+	if err != nil {
+		return nil, err
+	}
+	return &shift, nil
+}
+
 func StartShift(supervisorID string) (*Shift, error) {
 	shift := Shift{
 		ID:           uuid.New().String(),

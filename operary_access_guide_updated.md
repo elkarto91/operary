@@ -70,6 +70,9 @@ Import these OpenAPI specs into [Swagger Editor](https://editor.swagger.io/) or 
 | `equiptrust_returns_total`            | EquipTrust   | Equipment returned                       |
 | `operary_total_requests`              | Global       | All HTTP requests                        |
 | `operary_uptime_seconds`              | Global       | Server uptime                            |
+| `operary_shifts_started`              | Global       | Shifts started                 |
+| `operary_shifts_closed`               | Global       | Shifts closed                  |
+| `operary_tasks_created`               | Global       | Tasks created via API          |
 
 ---
 

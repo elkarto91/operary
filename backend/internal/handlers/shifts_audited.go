@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"sync/atomic"
 
 	"github.com/elkarto91/operary/internal/models"
 	"github.com/go-chi/chi/v5"
@@ -25,6 +26,8 @@ func StartShiftHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	atomic.AddUint64(&shiftsStarted, 1)
+
 	_ = models.RecordAudit("shift", shift.ID, "start", req.UserID, shift)
 
 	w.Header().Set("Content-Type", "application/json")
@@ -45,6 +48,8 @@ func CloseShiftHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to close shift", http.StatusInternalServerError)
 		return
 	}
+
+	atomic.AddUint64(&shiftsClosed, 1)
 
 	_ = models.RecordAudit("shift", shiftID, "close", userID, map[string]string{"status": "closed"})
 
