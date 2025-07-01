@@ -51,3 +51,7 @@ Expected Output
 🔄 Task ... → escalated
 🔒 Shift ... closed.
 ✅ Simulated shift complete.
+
+## ℹ️ More Examples
+
+See [../README.md](../README.md#quickstart) for setup steps and additional usage tips.
