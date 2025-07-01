@@ -97,6 +97,24 @@ Recording machine events and telemetry.
 - `Save(SensorEvent)`
 - `List()`
 
+## TrainOps
+Self-learning engine that stores tagged notes and feedback.
+
+**Main handlers**
+- `IngestData` – POST `/trainops/ingest`
+- `ListPredictions` – GET `/trainops/predictions`
+- `ProvideFeedback` – POST `/trainops/feedback`
+
+**Usecase layer**
+- `Ingest(request)`
+- `List()`
+- `AddFeedback(id, fb)`
+
+**Repository layer**
+- `Save(TrainingSample)`
+- `List()`
+- `UpdateFeedback(id, fb)`
+
 ## Shared Models
 Core task and shift logic lives under `internal/models`:
 - `Task` with functions `CreateTask`, `GetAllTasks`, `UpdateTask`, `GetTasksByTimeRange`.

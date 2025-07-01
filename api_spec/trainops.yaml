@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: TrainOps API
+  version: 1.0.0
+  description: API for self-learning operational intelligence
+
+paths:
+  /trainops/ingest:
+    post:
+      summary: Ingest training sample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainingSampleRequest'
+      responses:
+        '200':
+          description: Sample stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingSample'
+
+  /trainops/predictions:
+    get:
+      summary: List stored samples
+      responses:
+        '200':
+          description: Samples list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrainingSample'
+
+  /trainops/feedback:
+    post:
+      summary: Provide feedback on a sample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, feedback]
+              properties:
+                id:
+                  type: string
+                feedback:
+                  type: string
+      responses:
+        '200':
+          description: Updated sample
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingSample'
+
+components:
+  schemas:
+    TrainingSampleRequest:
+      type: object
+      required: [source, content]
+      properties:
+        source:
+          type: string
+        content:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        outcome:
+          type: string
+    TrainingSample:
+      allOf:
+        - $ref: '#/components/schemas/TrainingSampleRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+            feedback:
+              type: string
