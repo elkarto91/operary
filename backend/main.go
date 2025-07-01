@@ -14,6 +14,7 @@ import (
 	"github.com/elkarto91/operary/internal/services"
 	"github.com/elkarto91/operary/internal/traceboard"
 	"github.com/elkarto91/operary/internal/trainops"
+	"github.com/elkarto91/operary/internal/twinboard"
 	"github.com/elkarto91/operary/router"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
@@ -42,6 +43,7 @@ func main() {
 	equiptrust.Init(db)
 	sensorvault.Init(db)
 	trainops.Init(db)
+	twinboard.Init(db)
 
 	services.StartNotificationService(sugar)
 
