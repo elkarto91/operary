@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+  title: Integrations API
+  version: 1.0.0
+  description: API for sending outbound webhooks and emails
+paths:
+  /integrations/webhook/send:
+    post:
+      summary: Send a custom HTTP webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookRequest'
+      responses:
+        '200':
+          description: Webhook triggered
+  /integrations/email/send:
+    post:
+      summary: Send an email using SMTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '200':
+          description: Email sent
+components:
+  schemas:
+    WebhookRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          default: POST
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        payload:
+          type: object
+    EmailRequest:
+      type: object
+      required:
+        - to
+        - subject
+        - body
+      properties:
+        to:
+          type: array
+          items:
+            type: string
+        subject:
+          type: string
+        body:
+          type: string

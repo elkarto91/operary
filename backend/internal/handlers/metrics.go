@@ -118,6 +118,30 @@ var (
 			Help: "Total training samples ingested",
 		},
 	)
+	WebhookSuccess = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "webhook_success_total",
+			Help: "Total number of successful webhook calls",
+		},
+	)
+	WebhookFailures = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "webhook_failure_total",
+			Help: "Number of failed webhook calls",
+		},
+	)
+	EmailSuccess = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "email_success_total",
+			Help: "Total number of emails sent successfully",
+		},
+	)
+	EmailFailures = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "email_failure_total",
+			Help: "Number of failed email attempts",
+		},
+	)
 )
 
 func init() {
@@ -132,4 +156,8 @@ func init() {
 	prometheus.MustRegister(EquipTrustCheckouts)
 	prometheus.MustRegister(EquipTrustReturns)
 	prometheus.MustRegister(TrainOpsSamplesTotal)
+	prometheus.MustRegister(WebhookSuccess)
+	prometheus.MustRegister(WebhookFailures)
+	prometheus.MustRegister(EmailSuccess)
+	prometheus.MustRegister(EmailFailures)
 }

@@ -55,6 +55,10 @@ volumes:
 | `MONGO_URI`         | `mongodb://mongo:27017`      | MongoDB connection URI               |
 | `MONGO_DB`          | `operary_dev`                | Name of the MongoDB database         |
 | `ORG_TOKEN`         | `demo-org-token`             | Demo token for organizational scope  |
+| `SMTP_HOST`         | `smtp.example.com`           | SMTP server hostname for email       |
+| `SMTP_PORT`         | `587`                        | SMTP server port                     |
+| `SMTP_USER`         | `alert@example.com`          | SMTP username                        |
+| `SMTP_PASS`         | `yourpassword`               | SMTP password                        |
 
 All API calls must include the `X-Org-Token` header with this value.
 
@@ -78,6 +82,7 @@ You can import these files into Swagger Editor or Postman for API exploration:
 - `/api_spec/corepad.yaml`
 - `/api_spec/opsmirror.yaml`
 - `/api_spec/openapi.yaml` (core Operary APIs)
+- `/api_spec/integrations.yaml`
 
 ---
 
