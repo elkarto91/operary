@@ -14,6 +14,7 @@ import (
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/sensorvault"
+	"github.com/elkarto91/operary/internal/supplymesh"
 	"github.com/elkarto91/operary/internal/traceboard"
 	"github.com/elkarto91/operary/internal/trainops"
 	"github.com/elkarto91/operary/internal/twinboard"
@@ -36,6 +37,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	sensorvault.RegisterRoutes(r)
 	trainops.RegisterRoutes(r)
 	permitgrid.RegisterRoutes(r)
+	supplymesh.RegisterRoutes(r)
 	flowgrid.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
 	twinboard.RegisterRoutes(r)
