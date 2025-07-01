@@ -15,6 +15,7 @@ import (
 	"github.com/elkarto91/operary/internal/handlers"
 	"github.com/elkarto91/operary/internal/integrations"
 	authmiddleware "github.com/elkarto91/operary/internal/middleware"
+	"github.com/elkarto91/operary/internal/notifier"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/search"
@@ -46,6 +47,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	supplymesh.RegisterRoutes(r)
 	authz.RegisterRoutes(r)
 	eventbus.RegisterRoutes(r)
+	notifier.RegisterRoutes(r)
 	configmgr.RegisterRoutes(r)
 	search.RegisterRoutes(r)
 	flowgrid.RegisterRoutes(r)
