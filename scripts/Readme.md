@@ -52,6 +52,13 @@ Expected Output
 🔒 Shift ... closed.
 ✅ Simulated shift complete.
 
+### Customizing
+
+Update the `orgToken` variable near the top of each script with your own
+organization token. If Operary is running on a different host or port, edit the
+`baseURL` before execution. These scripts are intentionally verbose so you can
+copy the underlying API calls into curl or Postman for further experimentation.
+
 ## ℹ️ More Examples
 
 See [../README.md](../README.md#quickstart) for setup steps and additional usage tips.
