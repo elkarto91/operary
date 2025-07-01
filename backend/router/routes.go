@@ -18,6 +18,7 @@ import (
 	"github.com/elkarto91/operary/internal/supplymesh"
 	"github.com/elkarto91/operary/internal/traceboard"
 	"github.com/elkarto91/operary/internal/trainops"
+	"github.com/elkarto91/operary/internal/twinboard"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -41,6 +42,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	flowgrid.RegisterRoutes(r)
 	integrations.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
+	twinboard.RegisterRoutes(r)
 
 	r.Use(handlers.MetricsMiddleware)
 	r.Get("/v1/metrics", handlers.MetricsHandler)
