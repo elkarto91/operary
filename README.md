@@ -73,6 +73,7 @@ Operary is organized into small Go packages under `backend/internal`. Each packa
 - **SensorVault** – machine event storage
 - **TraceBoard** – incident reports & root cause analysis
 - **CorePad++** – multimedia notes with GPT-style escalation
+- **TrainOps** – self-learning operational intelligence
 A full list of functions is provided in [docs/overview.md](docs/overview.md).
 
 ---
