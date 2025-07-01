@@ -38,3 +38,7 @@ services.StartNotificationService(logger)
 ```
 
 This ensures the dispatcher boots with your app and provides observability immediately.
+
+## Development Notes
+
+These helpers are intentionally lightweight. Expand the dispatcher with message queues or extra logging as your experiments evolve.

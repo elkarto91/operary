@@ -8,7 +8,8 @@ This directory contains scripts to test core Operary flows using the public REST
 
 | Script | Description |
 |--------|-------------|
-| `sim_shift_test.go` | Starts a shift, creates tasks, updates statuses, and closes the shift — all via API calls  
+| `sim_shift_test.go` | Starts a shift, creates tasks, updates statuses, and closes the shift — all via API calls
+| `sample_media_upload.go` | Uploads a note with example media attachment
 | *(future)* | Add escalation test, webhook trigger test, or error response test
 
 ---
@@ -38,6 +39,7 @@ This simulation performs:
 ```bash
 cd scripts/
 go run sim_shift_test.go
+go run sample_media_upload.go # send a note with media
 
 
 Expected Output
@@ -49,3 +51,7 @@ Expected Output
 🔄 Task ... → escalated
 🔒 Shift ... closed.
 ✅ Simulated shift complete.
+
+## ℹ️ More Examples
+
+See [../README.md](../README.md#quickstart) for setup steps and additional usage tips.

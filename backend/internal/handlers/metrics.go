@@ -111,6 +111,13 @@ var (
 			Help: "Total number of equipment returns",
 		},
 	)
+
+	TrainOpsSamplesTotal = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "trainops_samples_total",
+			Help: "Total training samples ingested",
+		},
+	)
 )
 
 func init() {
@@ -124,4 +131,5 @@ func init() {
 	prometheus.MustRegister(PermitGridRejections)
 	prometheus.MustRegister(EquipTrustCheckouts)
 	prometheus.MustRegister(EquipTrustReturns)
+	prometheus.MustRegister(TrainOpsSamplesTotal)
 }

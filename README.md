@@ -56,6 +56,12 @@ All API requests must include an `X-Org-Token` header for access control.
 * **OpenAPI v3**
 * **Markdown** (for all product collateral)
 * **GitHub Pages + Jekyll** (linked portfolio docs)
+## Quickstart
+
+1. Install Go 1.18+
+2. Start the backend with `go run backend/cmd/operary/main.go`
+3. Run `go run scripts/sim_shift_test.go` to simulate a shift
+
 
 ## Module Overview
 Operary is organized into small Go packages under `backend/internal`. Each package exposes HTTP handlers, a usecase layer, and a Mongo-backed repository. The main modules are:
@@ -65,6 +71,9 @@ Operary is organized into small Go packages under `backend/internal`. Each packa
 - **PermitGrid** – permit-to-work requests
 - **EquipTrust** – equipment ledger
 - **SensorVault** – machine event storage
+- **TraceBoard** – incident reports & root cause analysis
+- **CorePad++** – multimedia notes with GPT-style escalation
+- **TrainOps** – self-learning operational intelligence
 A full list of functions is provided in [docs/overview.md](docs/overview.md).
 
 ---

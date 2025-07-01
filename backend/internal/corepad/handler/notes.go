@@ -13,6 +13,7 @@ type NoteRequest struct {
 	Content string   `json:"content"`
 	Author  string   `json:"author"`
 	Tags    []string `json:"tags"`
+	Media   []string `json:"media"`
 }
 
 // POST /corepad/notes
@@ -23,7 +24,7 @@ func CreateNoteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	note, err := usecase.CreateNote(req.Content, req.Author, req.Tags)
+	note, err := usecase.CreateNote(req.Content, req.Author, req.Tags, req.Media)
 	if err != nil {
 		http.Error(w, "Could not create note", http.StatusInternalServerError)
 		return
