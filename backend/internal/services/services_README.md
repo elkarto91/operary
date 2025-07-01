@@ -3,6 +3,11 @@
 
 This folder contains background and auxiliary services that operate outside the main request/response cycle.
 
+The implementations here demonstrate how Operary could handle asynchronous
+dispatch tasks alongside the REST API. While only a heartbeat notifier exists
+today, the same pattern can be expanded to deliver webhooks, schedule jobs, or
+stream events to other systems.
+
 ---
 
 ## `notification.go`
@@ -38,6 +43,9 @@ services.StartNotificationService(logger)
 ```
 
 This ensures the dispatcher boots with your app and provides observability immediately.
+
+The service runs in the background as soon as `main.go` starts, periodically
+logging heartbeats to indicate that asynchronous tasks would be processed.
 
 ## Development Notes
 

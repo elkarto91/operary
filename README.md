@@ -78,6 +78,23 @@ A full list of functions is provided in [docs/overview.md](docs/overview.md).
 
 ---
 
+## Application Architecture
+
+Operary follows a modular backend design where each domain is packaged with its
+own HTTP handlers, business logic, and MongoDB repository. The entry point under
+`backend/main.go` wires these modules together and starts a lightweight
+notification service for future integrations. The REST API is served with the
+`chi` router and stores tasks, shift logs, and audits in MongoDB.
+
+Background workers in `internal/services` provide a place for asynchronous
+dispatching and heartbeats. Example simulation scripts under `scripts/` exercise
+core flows entirely through the public API.
+
+For diagrams and a deeper discussion of the architecture see
+[docs/architecture.md](docs/architecture.md).
+
+---
+
 # 📚 Learn More
 
 This repo is part of the System Signal Portfolio.
