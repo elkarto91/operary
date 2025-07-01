@@ -13,6 +13,7 @@ This document provides an extended reference for all Operary modules delivered i
 | PermitGrid | Manage permits and PTWs | ✅ Done |
 | EquipTrust | Track asset/equipment lifecycle | ✅ Done |
 | SensorVault | Log sensor alerts, anomalies | ✅ Done |
+| TrainOps | Self-learning operational intelligence | ✅ Done |
 | TraceBoard | RCA and fault tree tracking | ✅ Done |
 | FlowGrid | Auto-assign shifts using skill matching | ✅ Done |
 | CorePad++ | Multimedia notes & GPT-style escalations | ✅ Done |
@@ -78,7 +79,14 @@ Stores sensor anomalies and telemetry events.
 
 Events are saved in `sensor_events` with optional links to tasks or audits.
 
-## 8. TraceBoard
+## 8. TrainOps
+Collects tagged operational notes for future model training.
+
+- `POST /trainops/ingest` – add a training sample.
+- `GET /trainops/predictions` – list stored samples.
+- `POST /trainops/feedback` – submit feedback on a prediction.
+
+## 9. TraceBoard
 Root cause analysis and incident tracking.
 
 - `POST /traceboard/incidents` – submit an incident report.
@@ -88,7 +96,7 @@ Root cause analysis and incident tracking.
 
 Reports in `traceboard_incidents` can later feed PDF exports and fault‑tree visualizations.
 
-## 9. FlowGrid
+## 10. FlowGrid
 Skill matching engine for shift scheduling.
 
 - `POST /flowgrid/match-skills` – return best worker assignments based on required skills.
@@ -96,7 +104,7 @@ Skill matching engine for shift scheduling.
 
 The module is stateless today but sets the foundation for automated scheduling.
 
-## 10. CorePad++
+## 11. CorePad++
 An extension of CorePad to support multimedia attachments and GPT‑style escalation summaries. Implementation will build upon CorePad handlers and is scoped for future enhancement.
 
 ---

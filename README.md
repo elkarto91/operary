@@ -71,6 +71,7 @@ Operary is organized into small Go packages under `backend/internal`. Each packa
 - **PermitGrid** – permit-to-work requests
 - **EquipTrust** – equipment ledger
 - **SensorVault** – machine event storage
+- **TrainOps** – self-learning operational intelligence
 A full list of functions is provided in [docs/overview.md](docs/overview.md).
 
 ---

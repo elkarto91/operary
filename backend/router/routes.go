@@ -15,6 +15,7 @@ import (
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/sensorvault"
 	"github.com/elkarto91/operary/internal/traceboard"
+	"github.com/elkarto91/operary/internal/trainops"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -32,6 +33,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	auditsync.RegisterRoutes(r)
 	equiptrust.RegisterRoutes(r)
 	sensorvault.RegisterRoutes(r)
+	trainops.RegisterRoutes(r)
 	permitgrid.RegisterRoutes(r)
 	flowgrid.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
