@@ -11,6 +11,7 @@ import (
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/sensorvault"
 	"github.com/elkarto91/operary/internal/services"
+	"github.com/elkarto91/operary/internal/traceboard"
 	"github.com/elkarto91/operary/router"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
@@ -34,6 +35,7 @@ func main() {
 	corepad.Init(db)
 	auditsync.Init(db)
 	permitgrid.Init(db) // ✅ NEW
+	traceboard.Init(db)
 	equiptrust.Init(db)
 	sensorvault.Init(db)
 
