@@ -44,3 +44,12 @@ func GetReport(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(report)
 }
+
+func DeleteReport(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if err := usecase.DeleteReport(id); err != nil {
+		http.Error(w, "Failed to delete", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}

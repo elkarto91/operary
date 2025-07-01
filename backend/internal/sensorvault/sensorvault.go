@@ -15,5 +15,7 @@ func RegisterRoutes(r chi.Router) {
 	r.Route("/sensorvault", func(r chi.Router) {
 		r.Post("/events", handler.RecordEvent)
 		r.Get("/events", handler.ListEvents)
+		r.Get("/events/{id}", handler.GetEvent)
+		r.Delete("/events/{id}", handler.DeleteEvent)
 	})
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/elkarto91/operary/internal/sensorvault/usecase"
+	"github.com/go-chi/chi/v5"
 )
 
 func RecordEvent(w http.ResponseWriter, r *http.Request) {
@@ -31,4 +32,23 @@ func ListEvents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(events)
+}
+
+func GetEvent(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	event, err := usecase.GetEvent(id)
+	if err != nil {
+		http.Error(w, "Event not found", http.StatusNotFound)
+		return
+	}
+	json.NewEncoder(w).Encode(event)
+}
+
+func DeleteEvent(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if err := usecase.DeleteEvent(id); err != nil {
+		http.Error(w, "Failed to delete", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
 }

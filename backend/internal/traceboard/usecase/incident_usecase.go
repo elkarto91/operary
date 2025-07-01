@@ -29,3 +29,11 @@ func GetReport(id string) (model.IncidentReport, error) {
 	}
 	return repo.GetByID(objID)
 }
+
+func DeleteReport(id string) error {
+	objID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+	return repo.DeleteByID(objID)
+}

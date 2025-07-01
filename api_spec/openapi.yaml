@@ -19,6 +19,8 @@ tags:
   - name: Tasks
   - name: Shifts
   - name: Audit Logs
+  - name: SensorVault
+  - name: TraceBoard
 
 components:
   securitySchemes:
@@ -68,20 +70,76 @@ components:
         closed:
           type: boolean
 
-    AuditEntry:
-      type: object
-      properties:
-        entity_type:
+  AuditEntry:
+    type: object
+    properties:
+      entity_type:
+        type: string
+      entity_id:
+        type: string
+      action:
+        type: string
+      user_id:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+
+  SensorEvent:
+    type: object
+    properties:
+      id:
+        type: string
+      source_id:
+        type: string
+      event_type:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+      description:
+        type: string
+      tags:
+        type: array
+        items:
           type: string
-        entity_id:
+      task_id:
+        type: string
+        nullable: true
+      audit_id:
+        type: string
+        nullable: true
+
+  IncidentReport:
+    type: object
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      root_cause:
+        type: string
+      recommendations:
+        type: string
+      linked_task_id:
+        type: string
+        nullable: true
+      linked_audit_id:
+        type: string
+        nullable: true
+      fault_tree_json:
+        type: string
+      tags:
+        type: array
+        items:
           type: string
-        action:
-          type: string
-        user_id:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
+      reported_by:
+        type: string
+      created_at:
+        type: string
+        format: date-time
 
 security:
   - OrgTokenAuth: []
@@ -204,3 +262,135 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AuditEntry"
+
+  /sensorvault/events:
+    post:
+      tags: [SensorVault]
+      summary: Record a sensor event
+      security:
+        - OrgTokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SensorEvent"
+      responses:
+        200:
+          description: Event recorded
+    get:
+      tags: [SensorVault]
+      summary: List sensor events
+      security:
+        - OrgTokenAuth: []
+      responses:
+        200:
+          description: List of sensor events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SensorEvent"
+
+  /sensorvault/events/{id}:
+    get:
+      tags: [SensorVault]
+      summary: Get a sensor event by ID
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sensor event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorEvent"
+        404:
+          description: Event not found
+    delete:
+      tags: [SensorVault]
+      summary: Delete a sensor event
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Event deleted
+
+  /traceboard/incidents:
+    post:
+      tags: [TraceBoard]
+      summary: Submit an incident report
+      security:
+        - OrgTokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IncidentReport"
+      responses:
+        200:
+          description: Report saved
+    get:
+      tags: [TraceBoard]
+      summary: List incident reports
+      security:
+        - OrgTokenAuth: []
+      responses:
+        200:
+          description: List of incident reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IncidentReport"
+
+  /traceboard/incidents/{id}:
+    get:
+      tags: [TraceBoard]
+      summary: Get incident report by ID
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Incident report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncidentReport"
+        404:
+          description: Report not found
+    delete:
+      tags: [TraceBoard]
+      summary: Delete incident report
+      security:
+        - OrgTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Report deleted

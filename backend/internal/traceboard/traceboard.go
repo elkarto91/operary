@@ -18,5 +18,6 @@ func RegisterRoutes(r chi.Router) {
 		r.Post("/incidents", handler.SubmitReport)
 		r.Get("/incidents", handler.ListReports)
 		r.Get("/incidents/{id}", handler.GetReport)
+		r.Delete("/incidents/{id}", handler.DeleteReport)
 	})
 }
