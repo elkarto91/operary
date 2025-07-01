@@ -33,3 +33,14 @@ func List() ([]model.SensorEvent, error) {
 	err = cursor.All(context.Background(), &results)
 	return results, err
 }
+
+func GetByID(id primitive.ObjectID) (model.SensorEvent, error) {
+	var result model.SensorEvent
+	err := collection.FindOne(context.Background(), bson.M{"_id": id}).Decode(&result)
+	return result, err
+}
+
+func DeleteByID(id primitive.ObjectID) error {
+	_, err := collection.DeleteOne(context.Background(), bson.M{"_id": id})
+	return err
+}
