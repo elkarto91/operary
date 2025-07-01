@@ -61,6 +61,17 @@ All API requests must include an `X-Org-Token` header for access control.
 1. Install Go 1.18+ and Docker
 2. Start the services with `make compose-up`
 3. (Optional) run `go run scripts/sim_shift_test.go` to simulate a shift
+=======
+1. Install Go 1.18+
+2. Start the backend with `go run backend/cmd/operary/main.go`
+3. Run `go run scripts/sim_shift_test.go` to simulate a shift
+4. Or launch the full stack with Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+   - Backend API: [http://localhost:8080](http://localhost:8080)
+   - Frontend UI: [http://localhost:3000](http://localhost:3000)
+   - Prometheus: [http://localhost:9090](http://localhost:9090)
 
 
 ## Module Overview
