@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info:
+  title: SupplyMesh API
+  version: 1.0.0
+  description: API for tracking suppliers and deliveries in Operary
+paths:
+  /supplymesh/suppliers:
+    post:
+      summary: Add a new supplier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+      responses:
+        '201':
+          description: Supplier created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+    get:
+      summary: List all suppliers
+      responses:
+        '200':
+          description: Supplier list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+  /supplymesh/deliveries:
+    post:
+      summary: Log an expected delivery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryRequest'
+      responses:
+        '201':
+          description: Delivery logged
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+    get:
+      summary: List deliveries
+      responses:
+        '200':
+          description: Delivery list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Delivery'
+  /supplymesh/escalate:
+    post:
+      summary: Escalate an issue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EscalationRequest'
+      responses:
+        '201':
+          description: Issue escalated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Escalation'
+components:
+  schemas:
+    SupplierRequest:
+      type: object
+      required: [name, sla]
+      properties:
+        name:
+          type: string
+        sla:
+          type: integer
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sla:
+          type: integer
+    DeliveryRequest:
+      type: object
+      required: [supplier_id, item, expected_date]
+      properties:
+        supplier_id:
+          type: string
+        item:
+          type: string
+        expected_date:
+          type: string
+          format: date-time
+    Delivery:
+      type: object
+      properties:
+        id:
+          type: string
+        supplier_id:
+          type: string
+        item:
+          type: string
+        expected_date:
+          type: string
+          format: date-time
+        delivered:
+          type: boolean
+    EscalationRequest:
+      type: object
+      required: [delivery_id, reason]
+      properties:
+        delivery_id:
+          type: string
+        reason:
+          type: string
+    Escalation:
+      type: object
+      properties:
+        id:
+          type: string
+        delivery_id:
+          type: string
+        reason:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
