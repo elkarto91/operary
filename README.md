@@ -57,6 +57,16 @@ All API requests must include an `X-Org-Token` header for access control.
 * **Markdown** (for all product collateral)
 * **GitHub Pages + Jekyll** (linked portfolio docs)
 
+## Module Overview
+Operary is organized into small Go packages under `backend/internal`. Each package exposes HTTP handlers, a usecase layer, and a Mongo-backed repository. The main modules are:
+- **CorePad** – operator notes
+- **OpsMirror** – live system status
+- **AuditSync** – digital audit log
+- **PermitGrid** – permit-to-work requests
+- **EquipTrust** – equipment ledger
+- **SensorVault** – machine event storage
+A full list of functions is provided in [docs/overview.md](docs/overview.md).
+
 ---
 
 # 📚 Learn More
