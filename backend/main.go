@@ -9,6 +9,7 @@ import (
 	"github.com/elkarto91/operary/internal/equiptrust"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
+	"github.com/elkarto91/operary/internal/sensorvault"
 	"github.com/elkarto91/operary/internal/services"
 	"github.com/elkarto91/operary/router"
 	"github.com/joho/godotenv"
@@ -34,6 +35,7 @@ func main() {
 	auditsync.Init(db)
 	permitgrid.Init(db) // ✅ NEW
 	equiptrust.Init(db)
+	sensorvault.Init(db)
 
 	services.StartNotificationService(sugar)
 
