@@ -13,7 +13,6 @@ import (
 
 var MongoClient *mongo.Client
 var OperaryDB *mongo.Database
-var mongoDB *mongo.Database
 
 func InitMongo() {
 	uri := os.Getenv("MONGO_URI")
@@ -41,5 +40,12 @@ func InitMongo() {
 	fmt.Println("✅ MongoDB connected:", dbName)
 }
 func GetMongoDB() *mongo.Database {
-	return mongoDB
+	// Return the initialized database instance used by the rest of the
+	// application. This was previously returning an unassigned variable
+	// which caused nil pointer errors when accessing the DB from other
+	// packages.
+	// During initialization OperaryDB is set to the active database
+	// connection. Simply return it here so other packages can interact
+	// with MongoDB after initialization.
+	return OperaryDB
 }

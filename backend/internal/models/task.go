@@ -57,28 +57,3 @@ func GetAllTasks() ([]Task, error) {
 
 	return tasks, nil
 }
-
-func GetTasksByTimeRange(start, end time.Time) ([]Task, error) {
-	filter := bson.M{
-		"created_at": bson.M{
-			"$gte": start,
-			"$lte": end,
-		},
-	}
-
-	cursor, err := taskCollection.Find(context.TODO(), filter)
-	if err != nil {
-		return nil, err
-	}
-	defer cursor.Close(context.TODO())
-
-	var tasks []Task
-	for cursor.Next(context.TODO()) {
-		var task Task
-		if err := cursor.Decode(&task); err != nil {
-			return nil, err
-		}
-		tasks = append(tasks, task)
-	}
-	return tasks, nil
-}

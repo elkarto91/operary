@@ -56,6 +56,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	r.Route("/v1/tasks", func(r chi.Router) {
 		r.Get("/", handlers.ListTasksHandler)
 		r.Post("/", handlers.CreateTaskHandler)
+		r.Patch("/{taskID}", handlers.UpdateTaskHandler)
 	})
 
 	// Shift endpoints
