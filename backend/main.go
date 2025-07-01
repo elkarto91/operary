@@ -63,5 +63,7 @@ func main() {
 	sugar.Info("📡 Starting Operary API on :8080")
 	r := router.NewRouterWithLogger(sugar)
 
-	http.ListenAndServe(":8080", r)
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		sugar.Fatalw("failed to start server", "error", err)
+	}
 }
