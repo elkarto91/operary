@@ -33,11 +33,15 @@ design/               → Wireframes, workflows, system maps
 api-spec/             → OpenAPI spec file (Golang-first)  
 backend/              → Golang server implementation (POC)  
 tests/                → Postman collection, test flows  
-docs/                 → Architecture, personas, risk notes  
+docs/                 → Architecture, personas, risk notes
+
+All API requests must include an `X-Org-Token` header for access control.
 
 # 💡 Key Use Cases
 
 * Create and assign operational tasks triggered by machine events or human inputs
+* Receive external alerts via webhook to auto-create tasks
+* Generate end-of-shift reports summarizing completed work
 * Coordinate shift-based responsibilities across teams
 * Provide real-time dashboards for plant supervisors
 * Auto-generate audit logs and traceability trails

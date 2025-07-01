@@ -56,6 +56,8 @@ volumes:
 | `MONGO_DB`          | `operary_dev`                | Name of the MongoDB database         |
 | `ORG_TOKEN`         | `demo-org-token`             | Demo token for organizational scope  |
 
+All API calls must include the `X-Org-Token` header with this value.
+
 > ⚠️ **Authentication:** MongoDB is currently open (no auth). To secure for production, add:
 ```yaml
 environment:
@@ -88,6 +90,9 @@ You can import these files into Swagger Editor or Postman for API exploration:
 | `opsmirror_status_warnings_total`     | Systems currently in WARN state          |
 | `operary_total_requests`              | Total HTTP requests received             |
 | `operary_uptime_seconds`              | Application uptime in seconds            |
+| `operary_shifts_started`              | Shifts started                  |
+| `operary_shifts_closed`               | Shifts closed                   |
+| `operary_tasks_created`               | Tasks created via API           |
 
 ---
 
