@@ -10,6 +10,7 @@ import (
 	"github.com/elkarto91/operary/internal/equiptrust"
 	"github.com/elkarto91/operary/internal/flowgrid"
 	"github.com/elkarto91/operary/internal/handlers"
+	"github.com/elkarto91/operary/internal/integrations"
 	authmiddleware "github.com/elkarto91/operary/internal/middleware"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
@@ -39,6 +40,7 @@ func NewRouterWithLogger(logger *zap.SugaredLogger) http.Handler {
 	permitgrid.RegisterRoutes(r)
 	supplymesh.RegisterRoutes(r)
 	flowgrid.RegisterRoutes(r)
+	integrations.RegisterRoutes(r)
 	traceboard.RegisterRoutes(r)
 	twinboard.RegisterRoutes(r)
 

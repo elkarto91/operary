@@ -8,6 +8,7 @@ import (
 	"github.com/elkarto91/operary/internal/corepad"
 	"github.com/elkarto91/operary/internal/equiptrust"
 	"github.com/elkarto91/operary/internal/flowgrid"
+	"github.com/elkarto91/operary/internal/integrations"
 	"github.com/elkarto91/operary/internal/opsmirror"
 	"github.com/elkarto91/operary/internal/permitgrid"
 	"github.com/elkarto91/operary/internal/sensorvault"
@@ -46,6 +47,7 @@ func main() {
 	trainops.Init(db)
 	twinboard.Init(db)
 	supplymesh.Init(db)
+	integrations.Init(db)
 	services.StartNotificationService(sugar)
 
 	sugar.Info("📡 Starting Operary API on :8080")
